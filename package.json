@@ -1,0 +1,14 @@
+{
+  "name": "gbf-wiki-opengraph",
+  "version": "1.0.0",
+  "description": "Generates opengraph image for gbf.wiki",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "FabulousCupcake",
+  "license": "MIT",
+  "engine": 16,
+  "dependencies": {
+    "puppeteer": "^17.1.0"
+  }
+}
