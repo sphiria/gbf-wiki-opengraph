@@ -48,7 +48,7 @@ const main = async () => {
     } catch (err) {
       console.log("❌");
       console.error(err);
-      continue;
+      throw(err);
     }
 
     console.log("✅");
