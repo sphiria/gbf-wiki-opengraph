@@ -1,0 +1,61 @@
+name: Synchronize
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 0 * * *'
+
+env:
+  RCLONE_CONFIG_R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+  RCLONE_CONFIG_R2_SECRET_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY_ID }}
+  RCLONE_CONFIG_R2_ENDPOINT: https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
+  RCLONE_CONFIG_R2_TYPE: S3
+  RCLONE_CONFIG_R2_PROVIDER: Cloudflare
+  RCLONE_CONFIG_R2_UPLOAD_CONCURRENCY: 50
+  RCLONE_TRANSFERS: 50
+
+jobs:
+  sync:
+    name: "Synchronize"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup rclone
+        run: |
+          apt-install -y rclone
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Compare
+        run: |
+          mv data/weapons.json data/weapons.old.json
+          ./data/download.sh
+          ./.github/compare.js data/weapons.old.json data/weapons.json > list.txt
+
+      - name: Generate images
+        run: |
+          cat list.txt | node index.js
+
+      - name: Upload to R2
+        run: |
+          rclone copy dist cf:gbf-wiki-cdn --progress
+
+      - name: Update git repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/weapons.json
+          git commit -m "sync: $(date)"
+          git push
