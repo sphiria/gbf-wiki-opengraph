@@ -29,7 +29,7 @@ jobs:
         run: |
           mv data/weapons.json data/weapons.old.json
           ./data/download.sh
-          ./.github/compare.js data/weapons.old.json data/weapons.json > list.txt
+          ./.github/scripts/compare.js data/weapons.old.json data/weapons.json > list.txt
 
           if [[ "$(cat list.txt)" == "" ]]; then
             echo "::set-output name=continue::true"
@@ -63,7 +63,7 @@ jobs:
         run: |
           mv data/weapons.json data/weapons.old.json
           ./data/download.sh
-          ./.github/compare.js data/weapons.old.json data/weapons.json > list.txt
+          ./.github/scripts/compare.js data/weapons.old.json data/weapons.json > list.txt
 
       - name: Generate images
         run: |
