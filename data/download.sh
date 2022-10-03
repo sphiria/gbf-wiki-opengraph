@@ -7,7 +7,7 @@ DEST_FILE="$SCRIPT_PATH/weapons.json"
 
 # Special:CargoExport pages
 WEAPONS_URL='https://gbf.wiki/index.php?title=Special:CargoExport&tables=weapons%2C+_pageData%2C&join+on=weapons._pageName%3D_pageData._pageName&fields=weapons._pageName%2C+_pageData._pageName%2C+_pageData._modificationDate&&order+by=`cargo___pageData`.`_pageName`%2C`cargo___pageData`.`_modificationDate`&limit=5000&format=json';
-curl -sL "$WEAPONS_URL" > "$TEMP_FILE"
+curl -sL "$WEAPONS_URL&$RANDOM" > "$TEMP_FILE"
 
 # Transform into simpler key:val object
 JQ_QUERY='map({
