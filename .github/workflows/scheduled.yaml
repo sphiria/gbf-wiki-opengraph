@@ -47,8 +47,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup rclone
-        run: |
-          apt-install -y rclone
+        uses: AnimMouse/setup-rclone@d6415971118fbb7f2747614437514a3702aa2333
 
       - name: Setup node
         uses: actions/setup-node@v3
