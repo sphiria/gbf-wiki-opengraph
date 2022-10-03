@@ -2,9 +2,6 @@ name: Synchronize
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
   schedule:
     - cron: '0 0 * * *'
 
@@ -18,9 +15,33 @@ env:
   RCLONE_TRANSFERS: 50
 
 jobs:
-  sync:
-    name: "Synchronize"
+  check:
+    name: "Check changes"
     runs-on: ubuntu-latest
+    outputs:
+      continue: ${{ steps.check.outputs.continue }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Check new wiki page modifications
+        id: check
+        run: |
+          mv data/weapons.json data/weapons.old.json
+          ./data/download.sh
+          ./.github/compare.js data/weapons.old.json data/weapons.json > list.txt
+
+          if [[ "$(cat list.txt)" == "" ]]; then
+            echo "::set-output name=continue::true"
+          else
+            echo "::set-output name=continue::false"
+          fi
+
+  update:
+    name: "Update R2"
+    runs-on: ubuntu-latest
+    needs: check
+    if: needs.check.outputs.continue == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -38,7 +59,7 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      - name: Compare
+      - name: Generate changed pages list
         run: |
           mv data/weapons.json data/weapons.old.json
           ./data/download.sh
