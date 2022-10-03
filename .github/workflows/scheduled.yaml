@@ -33,8 +33,11 @@ jobs:
 
           if [[ "$(cat list.txt)" == "" ]]; then
             echo "::set-output name=continue::true"
+            echo "The following pages need to be updated:" >> $GITHUB_STEP_SUMMARY
+            printf "\`\`\`\n$(cat list.txt)\n\`\`\`" >> $GITHUB_STEP_SUMMARY
           else
             echo "::set-output name=continue::false"
+            echo "No new page modifications detected." >> $GITHUB_STEP_SUMMARY
           fi
 
   update:
