@@ -8,7 +8,7 @@ const render = async (page, pageName) => {
   await page.goto(url);
   await page.addStyleTag({ path: 'style.css' });
 
-  await page.waitForSelector('.opengraph-image', { timeout: 2000 });
+  await page.waitForSelector('.opengraph-image', { timeout: 5000 });
   const element = await page.$('.opengraph-image');
 
   await page.waitForNetworkIdle();
