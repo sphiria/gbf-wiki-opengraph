@@ -90,6 +90,8 @@ body, body > * {
 .opengraph-image .og__row-middle {
   width: 700px;
   height: 190px;
+  box-sizing: border-box;
+  padding: 0 30px;
 
   display: flex;
   justify-content: space-between;
@@ -108,7 +110,7 @@ body, body > * {
 
 /* unlock */
 .opengraph-image .og__unlock {
-  width: 300px;
+  width: 220px;
 
   box-sizing: border-box;
   padding-top: 10px;
@@ -120,7 +122,6 @@ body, body > * {
 
   font-size: 70%;
   text-align: center;
-
 }
 
 .og__unlock-label {
