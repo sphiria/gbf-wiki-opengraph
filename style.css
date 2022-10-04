@@ -38,7 +38,7 @@ body, body > * {
   box-sizing: border-box;
 
   font-family: "FOT-TelopMin Pro", serif;
-  font-size: 32px;
+  font-size: 30px;
   line-height: 1;
   color: #f2eee2;
   text-shadow: 0px 0px 2px #150f0f,
@@ -71,19 +71,29 @@ body, body > * {
 }
 
 .opengraph-image .og__top-bar:not(.has-series) .og__name {
-  margin-top: 18px;
+  margin-top: 19px;
 }
 
-.opengraph-image .og__top-bar .og__series {
-  font-size: 83.3%;
-  margin-top: 12px;
-}
-
-.opengraph-image .og__top-bar .og__series-icon {
+.og__series-icon,
+.og__awakening-icon,
+.og__ax-icon {
   position: absolute;
+}
+
+.og__series-icon {
   transform: scale(1.3);
   top: 15px;
   left: 90px;
+}
+
+.og__awakening-icon {
+  top: 10px;
+  right: 40px;
+}
+
+.og__ax-icon {
+  top: 24px;
+  right: 102px;
 }
 
 /* MIDDLE ROW ------------------------------------------------ */
@@ -133,7 +143,6 @@ body, body > * {
     rgba(138,116,96,0) 70%,
     rgba(150,115,81,0) 100%
   );
-  margin: 0 10px;
 }
 
 .opengraph-image .og__unlock-image img {
