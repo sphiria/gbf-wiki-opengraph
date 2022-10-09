@@ -1,0 +1,84 @@
+name: Synchronize Summons
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 1 * * *'
+
+
+jobs:
+  check:
+    name: "Check changes"
+    runs-on: ubuntu-latest
+    outputs:
+      continue: ${{ steps.check.outputs.continue }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Check new wiki page modifications
+        id: check
+        run: |
+          mv data/summons.json data/summons.old.json
+          ./data/download.sh
+          ./.github/scripts/compare.js data/summons.old.json data/summons.json > list.txt
+
+          if [[ "$(cat list.txt)" == "" ]]; then
+            echo "::set-output name=continue::false"
+            echo "No new page modifications detected." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "::set-output name=continue::true"
+            echo "The following pages need to be updated:" >> $GITHUB_STEP_SUMMARY
+            printf "\`\`\`\n$(cat list.txt)\n\`\`\`" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  update:
+    name: "Update R2"
+    runs-on: ubuntu-latest
+    needs: check
+    if: needs.check.outputs.continue == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup rclone
+        uses: AnimMouse/setup-rclone@d6415971118fbb7f2747614437514a3702aa2333
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Generate changed pages list
+        run: |
+          mv data/summons.json data/summons.old.json
+          ./data/download.sh
+          ./.github/scripts/compare.js data/summons.old.json data/summons.json > list.txt
+
+      - name: Generate images
+        run: |
+          cat list.txt | node index.js
+
+      - name: Upload to R2
+        env:
+          RCLONE_CONFIG_R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          RCLONE_CONFIG_R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          RCLONE_CONFIG_R2_ENDPOINT: https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
+          RCLONE_CONFIG_R2_TYPE: s3
+          RCLONE_CONFIG_R2_PROVIDER: Cloudflare
+          RCLONE_CONFIG_R2_UPLOAD_CONCURRENCY: 50
+          RCLONE_TRANSFERS: 50
+        run: |
+          rclone copy dist r2:gbf-wiki-cdn --progress
+
+      - name: Update git repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/summons.json
+          git commit -m "sync: $(date)"
+          git push
