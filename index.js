@@ -3,6 +3,23 @@
 const fs = require("fs");
 const puppeteer = require('puppeteer');
 
+// Suppress Fetch API Experimental Warning
+// https://github.com/nodejs/node/issues/30810#issuecomment-1138834088
+const suppressExperimentalWarning = () => {
+  const originalEmit = process.emit;
+
+  process.emit = function (name, data, ...args) {
+    if (
+      name === 'warning' &&
+      typeof data === 'object' &&
+      data.name === 'ExperimentalWarning'
+    )
+      return false
+
+    return originalEmit.apply(process, arguments)
+  }
+}
+
 // render takes Puppeteer page object and the name of the page to be rendered as image
 // And somehow generates an image out of those
 const render = async (page, pageName) => {
@@ -64,4 +81,5 @@ const main = async () => {
   await browser.close();
 }
 
+suppressExperimentalWarning();
 main();
