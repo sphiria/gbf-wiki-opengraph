@@ -3,14 +3,18 @@
 const fs = require("fs");
 const puppeteer = require('puppeteer');
 
+// render takes Puppeteer page object and the name of the page to be rendered as image
+// And somehow generates an image out of those
 const render = async (page, pageName) => {
   const url = `https://gbf.wiki/${pageName}`;
   await page.goto(url);
   await page.addStyleTag({ path: 'style.css' });
 
+  // Wait and ensure it is rendered
   await page.waitForSelector('.opengraph-image', { timeout: 5000 });
   const element = await page.$('.opengraph-image');
 
+  // Wait until images are loaded / network is idle and screenshot
   await page.waitForNetworkIdle();
   await element.screenshot({
     path: `dist/${pageName}.webp`,
@@ -20,6 +24,7 @@ const render = async (page, pageName) => {
   });
 };
 
+// main does a  bit of args processing and initializations
 const main = async () => {
   // We expect stdin to contain the list of page names split by linebreak
   const stdin = fs.readFileSync(0).toString();
