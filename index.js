@@ -16,6 +16,7 @@ const render = async (page, pageName) => {
     path: `dist/${pageName}.webp`,
     omitBackground: true,
     type: "webp",
+    quality: 95,
   });
 };
 
