@@ -2,10 +2,13 @@
 [![Synchronize](https://github.com/FabulousCupcake/gbf-wiki-opengraph/actions/workflows/weapons.yaml/badge.svg)](https://github.com/FabulousCupcake/gbf-wiki-opengraph/actions/workflows/weapons.yaml)
 [![Synchronize](https://github.com/FabulousCupcake/gbf-wiki-opengraph/actions/workflows/summons.yaml/badge.svg)](https://github.com/FabulousCupcake/gbf-wiki-opengraph/actions/workflows/summons.yaml)
 
-This repository enables gbf.wiki to use fancy opengraph images on weapon, character (tba), and summon pages.  
-The images are tailored/optimised for embeds in Discord, hence 700x350 size.
+This repository enables gbf.wiki to use fancy opengraph images on weapon, character (tba), and summon pages. The images are tailored/optimised for embeds in Discord, hence 700x350 size.
 
-<img width="830" alt="gbf-wiki-opengraph-preview" src="https://user-images.githubusercontent.com/25855364/194773170-4553dc17-aab4-40f4-b000-3c8307b4f856.png">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/25855364/194773937-d1e163a3-35be-4ddb-942c-6397318cb32c.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/25855364/194773934-76165c9e-f297-4beb-ac35-2cb23b0c932a.png">
+  <img alt="Shows opengraph image embed in Discord before and after this project." src="https://user-images.githubusercontent.com/25855364/194773937-d1e163a3-35be-4ddb-942c-6397318cb32c.png">
+</picture>
 
 
 ## Local Usage
@@ -38,8 +41,8 @@ It runs daily and pulls the last modification dates from Cargo to generate the l
 It then runs Puppeteer to generate the new image, uploads it to R2, and updates the known modification date in the repo.
 
 ## Links
-https://gbf.wiki/User:FabulousCupcake/og/Template:Weapon
-https://gbf.wiki/User:FabulousCupcake/og/Template:Summon
+* https://gbf.wiki/User:FabulousCupcake/og/Template:Weapon
+* https://gbf.wiki/User:FabulousCupcake/og/Template:Summon
 
 [example]: https://cdn.gbf.wiki/Lord_of_Flames.webp
 [workflow]: https://github.com/FabulousCupcake/gbf-wiki-opengraph/blob/master/.github/workflows/scheduled.yaml
