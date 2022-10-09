@@ -3,6 +3,8 @@
 const fs = require("fs");
 const puppeteer = require('puppeteer');
 
+const EMPTY_PAGE_URL="https://gbf.wiki/User:FabulousCupcake/og/";
+
 // Suppress Fetch API Experimental Warning
 // https://github.com/nodejs/node/issues/30810#issuecomment-1138834088
 const suppressExperimentalWarning = () => {
@@ -20,12 +22,26 @@ const suppressExperimentalWarning = () => {
   }
 }
 
+// fetchFromParseApi uses parse API to execute TemplateSandbox feature
+// We basically hotswap `Template:Weapon` with `User:FabulousCupcake/og/Template:weapon`
+const fetchFromParseApi = async (pageName) => {
+  const sandboxPrefix = "User:FabulousCupcake/og";
+  const url = `https://gbf.wiki/api.php?action=parse&page=${pageName}&disablelimitreport=1&disabletoc=1&prop=text&templatesandboxprefix=${sandboxPrefix}&format=json`
+
+  const data = await fetch(url);
+  const json = await data.json();
+  const text = json.parse.text["*"];
+
+  return text;
+}
+
 // render takes Puppeteer page object and the name of the page to be rendered as image
 // And somehow generates an image out of those
 const render = async (page, pageName) => {
-  const url = `https://gbf.wiki/${pageName}`;
-  await page.goto(url);
-  await page.addStyleTag({ path: 'style.css' });
+  // Fetch content and put it in the page
+  const content = await fetchFromParseApi(pageName);
+  const command = `document.querySelector("#mw-content-text").innerHTML = \`${content}\``;
+  await page.evaluate(command);
 
   // Wait and ensure it is rendered
   await page.waitForSelector('.opengraph-image', { timeout: 5000 });
@@ -54,6 +70,8 @@ const main = async () => {
   // Initialize Puppeteer
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
+  await page.goto(EMPTY_PAGE_URL);
+  await page.addStyleTag({ path: 'style.css' });
 
   // Process
   for await (const [index, pageName] of pages.entries()) {
