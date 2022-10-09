@@ -26,7 +26,8 @@ const suppressExperimentalWarning = () => {
 // We basically hotswap `Template:Weapon` with `User:FabulousCupcake/og/Template:weapon`
 const fetchFromParseApi = async (pageName) => {
   const sandboxPrefix = "User:FabulousCupcake/og";
-  const url = `https://gbf.wiki/api.php?action=parse&page=${pageName}&disablelimitreport=1&disabletoc=1&redirects=1&prop=text&templatesandboxprefix=${sandboxPrefix}&format=json`
+  const escapedPageName = encodeURIComponent(pageName);
+  const url = `https://gbf.wiki/api.php?action=parse&page=${escapedPageName}&disablelimitreport=1&disabletoc=1&redirects=1&prop=text&templatesandboxprefix=${sandboxPrefix}&format=json`
 
   const data = await fetch(url);
   const json = await data.json();
