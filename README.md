@@ -3,6 +3,18 @@
 
 This repository enables gbf.wiki to use fancy opengraph images on weapon, character (tba), and summon (tba) pages.
 
+## Local Usage
+```sh
+# Install deps
+npm ci
+
+# Generate image
+echo Lord of Flames | ./index.js
+
+# Open image
+open dist/Lord_of_Flames.webp
+```
+
 ## Technical Details
 The image is generated using Puppeteer, so HTML/CSS can be used to put things into the image with ease.
 
@@ -24,9 +36,9 @@ It runs daily and pulls the last modification dates from Cargo to generate the l
 It then runs Puppeteer to generate the new image, uploads it to R2, and updates the known modification date in the repo.
 
 ## Links
-https://gbf.wiki/Template:Weapon  
-https://gbf.wiki/Template:Weapon/OpengraphImage  
-https://gbf.wiki/User:FabulousCupcake/common.css  
+https://gbf.wiki/Template:Weapon
+https://gbf.wiki/Template:Weapon/OpengraphImage
+https://gbf.wiki/User:FabulousCupcake/common.css
 
 [example]: https://cdn.gbf.wiki/Lord_of_Flames.webp
 [workflow]: https://github.com/FabulousCupcake/gbf-wiki-opengraph/blob/master/.github/workflows/scheduled.yaml
