@@ -2,6 +2,7 @@
 [![Synchronize](https://github.com/FabulousCupcake/gbf-wiki-opengraph/actions/workflows/scheduled.yaml/badge.svg)](https://github.com/FabulousCupcake/gbf-wiki-opengraph/actions/workflows/scheduled.yaml)
 
 This repository enables gbf.wiki to use fancy opengraph images on weapon, character (tba), and summon (tba) pages.
+The image sizes are optimized for embeds in Discord (hence 700x350 size).
 
 ## Local Usage
 ```sh
