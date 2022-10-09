@@ -25,8 +25,8 @@ const main = async () => {
   const pages = stdin
     .split("\n")
     .filter(x => x)
-    .map(x => x.replace("&amp;", "&"))
-    .map(x => x.replace(" ", "_"));
+    .map(x => x.replaceAll("&amp;", "&"))
+    .map(x => x.replaceAll(" ", "_"));
 
   // Initialize Puppeteer
   const browser = await puppeteer.launch();
