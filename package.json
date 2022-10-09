@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "Generates opengraph image for gbf.wiki",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "author": "FabulousCupcake",
   "license": "MIT",
-  "engine": 16,
+  "engine": 18,
   "dependencies": {
-    "puppeteer": "^17.1.0"
+    "puppeteer": "^18.2.1"
   }
 }
