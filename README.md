@@ -45,4 +45,4 @@ It then runs Puppeteer to generate the new image, uploads it to R2, and updates 
 * https://gbf.wiki/User:FabulousCupcake/og/Template:Summon
 
 [example]: https://cdn.gbf.wiki/Lord_of_Flames.webp
-[workflow]: https://github.com/FabulousCupcake/gbf-wiki-opengraph/blob/master/.github/workflows/scheduled.yaml
+[workflow]: https://github.com/FabulousCupcake/gbf-wiki-opengraph/tree/master/.github/workflows
