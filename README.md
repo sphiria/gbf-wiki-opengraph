@@ -2,9 +2,11 @@
 [![Synchronize](https://github.com/FabulousCupcake/gbf-wiki-opengraph/actions/workflows/weapons.yaml/badge.svg)](https://github.com/FabulousCupcake/gbf-wiki-opengraph/actions/workflows/weapons.yaml)
 [![Synchronize](https://github.com/FabulousCupcake/gbf-wiki-opengraph/actions/workflows/summons.yaml/badge.svg)](https://github.com/FabulousCupcake/gbf-wiki-opengraph/actions/workflows/summons.yaml)
 
+This repository enables gbf.wiki to use fancy opengraph images on weapon, character (tba), and summon pages.  
+The images are tailored/optimised for embeds in Discord, hence 700x350 size.
 
-This repository enables gbf.wiki to use fancy opengraph images on weapon, character (tba), and summon (tba) pages.
-The image sizes are optimized for embeds in Discord (hence 700x350 size).
+<img width="830" alt="gbf-wiki-opengraph-preview" src="https://user-images.githubusercontent.com/25855364/194773170-4553dc17-aab4-40f4-b000-3c8307b4f856.png">
+
 
 ## Local Usage
 ```sh
@@ -37,6 +39,7 @@ It then runs Puppeteer to generate the new image, uploads it to R2, and updates 
 
 ## Links
 https://gbf.wiki/User:FabulousCupcake/og/Template:Weapon
+https://gbf.wiki/User:FabulousCupcake/og/Template:Summon
 
 [example]: https://cdn.gbf.wiki/Lord_of_Flames.webp
 [workflow]: https://github.com/FabulousCupcake/gbf-wiki-opengraph/blob/master/.github/workflows/scheduled.yaml
