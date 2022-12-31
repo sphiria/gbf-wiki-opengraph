@@ -42,7 +42,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup rclone
-        uses: AnimMouse/setup-rclone@d6415971118fbb7f2747614437514a3702aa2333
+        uses: AnimMouse/setup-rclone@50e8a228925a134795c4eb7c455b28e25d3dbee8
 
       - name: Setup node
         uses: actions/setup-node@v3
