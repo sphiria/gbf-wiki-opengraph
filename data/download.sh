@@ -6,10 +6,13 @@ TEMP_FILE="$(mktemp)"
 WEAPONS_FILE="$SCRIPT_PATH/weapons.json"
 SUMMONS_FILE="$SCRIPT_PATH/summons.json"
 
-JQ_QUERY='map({
+JQ_QUERY='
+map(select(type=="object")) |
+map({
   (._pageName | tostring):
   ._modificationDate | strptime("%Y-%m-%d %H:%M:%S") | mktime
-}) | add'
+}) |
+add'
 
 # Weapons
 printf "Weapons... "
