@@ -5,6 +5,8 @@ on:
   schedule:
     - cron: '0 1 * * *'
 
+concurrency:
+  group: sync
 
 jobs:
   check:
