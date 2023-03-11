@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: master
 
       - name: Check new wiki page modifications
         id: check
@@ -42,6 +44,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: master
 
       - name: Setup rclone
         uses: AnimMouse/setup-rclone@50e8a228925a134795c4eb7c455b28e25d3dbee8
