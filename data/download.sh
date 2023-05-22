@@ -8,6 +8,7 @@ SUMMONS_FILE="$SCRIPT_PATH/summons.json"
 
 JQ_QUERY='
 map(select(type=="object")) |
+map(select(._pageName != null)) |
 map({
   (._pageName | tostring):
   ._modificationDate | strptime("%Y-%m-%d %H:%M:%S") | mktime
