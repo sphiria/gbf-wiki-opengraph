@@ -6,13 +6,6 @@ const puppeteer = require('puppeteer');
 const USER_AGENT = "node github.com/FabulousCupcake/gbf-wiki-opengraph"
 const EMPTY_PAGE_URL="https://gbf.wiki/User:FabulousCupcake/og/";
 
-// Add fetch() wrapper that adds useragent
-const origFetch = fetch;
-const fetch = async (resource, options = {}) => {
-  let opt = {...options, headers: {...options?.headers, ...{"User-Agent": USER_AGENT} } }
-  return await origFetch(resource, opt)
-}
-
 // Suppress Fetch API Experimental Warning
 // https://github.com/nodejs/node/issues/30810#issuecomment-1138834088
 const suppressExperimentalWarning = () => {
@@ -37,7 +30,7 @@ const fetchFromParseApi = async (pageName) => {
   const escapedPageName = encodeURIComponent(pageName);
   const url = `https://gbf.wiki/api.php?action=parse&page=${escapedPageName}&disablelimitreport=1&disabletoc=1&redirects=1&prop=text&templatesandboxprefix=${sandboxPrefix}&format=json`
 
-  const data = await fetch(url);
+  const data = await fetch(url, { headers: { "User-Agent": USER_AGENT }});
   const json = await data.json();
   const text = json.parse.text["*"];
 
