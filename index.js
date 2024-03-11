@@ -72,7 +72,7 @@ const main = async () => {
   // Initialize Puppeteer
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  page.setExtraHTTPHeaders({ headers: { "User-Agent": USER_AGENT } });
+  page.setExtraHTTPHeaders({ "User-Agent": USER_AGENT });
   await page.goto(EMPTY_PAGE_URL);
   await page.addStyleTag({ path: 'style.css' });
 
