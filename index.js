@@ -3,7 +3,7 @@
 const fs = require("fs");
 const puppeteer = require('puppeteer');
 
-const USER_AGENT = "node github.com/FabulousCupcake/gbf-wiki-opengraph"
+const USER_AGENT = process.env["USERAGENT"];
 const EMPTY_PAGE_URL="https://gbf.wiki/User:FabulousCupcake/og/";
 
 // Suppress Fetch API Experimental Warning
