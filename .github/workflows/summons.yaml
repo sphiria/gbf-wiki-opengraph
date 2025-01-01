@@ -8,6 +8,9 @@ on:
 concurrency:
   group: sync
 
+env:
+  USERAGENT: ${{ secrets.USERAGENT }}
+
 jobs:
   check:
     name: "Check changes"
