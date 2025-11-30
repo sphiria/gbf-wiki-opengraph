@@ -37,7 +37,7 @@ const fetchFromParseApi = async (pageName) => {
   try {
     json = await JSON.parse(resp);
   } catch (err) {
-    console.log(await data.text());
+    console.log(resp);
     throw new Error("Failed to parse JSON: " + err.message);
   }
   const text = json.parse.text["*"];
