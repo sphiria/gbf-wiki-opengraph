@@ -31,10 +31,11 @@ const fetchFromParseApi = async (pageName) => {
   const url = `https://gbf.wiki/api.php?action=parse&page=${escapedPageName}&disablelimitreport=1&disabletoc=1&redirects=1&prop=text&templatesandboxprefix=${sandboxPrefix}&format=json`
 
   const data = await fetch(url, { headers: { "User-Agent": USER_AGENT }});
+  const resp = await data.text();
 
-  let json;
+  let json = {};
   try {
-    json = await data.json();
+    json = await JSON.parse(resp);
   } catch (err) {
     console.log(await data.text());
     throw new Error("Failed to parse JSON: " + err.message);
