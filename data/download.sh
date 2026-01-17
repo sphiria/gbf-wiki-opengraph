@@ -24,9 +24,20 @@ debug() {
   echo '```' >> "$GITHUB_STEP_SUMMARY"
 }
 
+_escape() {
+  node -p "encodeURI(process.argv[1])" "$1"
+}
+
 # Weapons
 printf "Weapons... "
-WEAPONS_URL='https://gbf.wiki/index.php?title=Special:CargoExport&tables=weapons%2C+_pageData%2C&join+on=weapons._pageName%3D_pageData._pageName&fields=weapons._pageName%2C+_pageData._pageName%2C+_pageData._modificationDate&&order+by=`cargo___pageData`.`_pageName`%2C`cargo___pageData`.`_modificationDate`&limit=5000&format=json';
+WEAPONS_URL="https://gbf.wiki/index.php?title=Special:CargoExport"\
+"&tables=weapons, _pageData"\
+"&join on=weapons._pageName=_pageData._pageName"\
+"&fields=weapons._pageName, _pageData._pageName, _pageData._modificationDate"\
+"&order by=_pageData._pageName, _pageData._modificationDate"\
+"&limit=5000"\
+"&format=json"
+WEAPONS_URL="$(_escape "$WEAPONS_URL")"
 curl -A "$USER_AGENT" -fsSL "$WEAPONS_URL&$RANDOM" > "$TEMP_FILE"
 debug "$TEMP_FILE"
 jq "$JQ_QUERY" "$TEMP_FILE" > "$WEAPONS_FILE"
@@ -35,7 +46,14 @@ echo "OK $(cat "$WEAPONS_FILE" | wc -l)"
 
 # Summons
 printf "Summons... "
-SUMMONS_URL='https://gbf.wiki/index.php?title=Special:CargoExport&tables=summons%2C+_pageData%2C&join+on=summons._pageName%3D_pageData._pageName&fields=summons._pageName%2C+_pageData._pageName%2C+_pageData._modificationDate&&order+by=`cargo___pageData`.`_pageName`%2C`cargo___pageData`.`_modificationDate`&limit=5000&format=json';
+WEAPONS_URL="https://gbf.wiki/index.php?title=Special:CargoExport"\
+"&tables=summons, _pageData"\
+"&join on=summons._pageName=_pageData._pageName"\
+"&fields=summons._pageName, _pageData._pageName, _pageData._modificationDate"\
+"&order by=_pageData._pageName, _pageData._modificationDate"\
+"&limit=5000"\
+"&format=json"
+SUMMONS_URL="$(_escape "$WEAPONS_URL")"
 curl -A "$USER_AGENT" -fsSL "$SUMMONS_URL&$RANDOM" > "$TEMP_FILE"
 debug "$TEMP_FILE"
 jq "$JQ_QUERY" "$TEMP_FILE" > "$SUMMONS_FILE"
