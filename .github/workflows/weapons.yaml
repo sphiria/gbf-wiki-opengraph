@@ -39,6 +39,13 @@ jobs:
             printf "\`\`\`\n$(cat list.txt)\n\`\`\`" >> $GITHUB_STEP_SUMMARY
           fi
 
+      - if: always()
+        name: Upload for debugging
+        uses: actions/upload-artifact@v6
+        with:
+          name: data.json
+          path: /tmp/data.json
+
   update:
     name: "Update R2"
     runs-on: ubuntu-22.04

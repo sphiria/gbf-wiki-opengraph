@@ -4,7 +4,7 @@ set -Eueo pipefail
 USER_AGENT="curl github.com/FabulousCupcake/gbf-wiki-opengraph"
 
 SCRIPT_PATH=$(dirname $(realpath -s $0))
-TEMP_FILE="$(mktemp)"
+TEMP_FILE="$(/tmp/data.json)"
 WEAPONS_FILE="$SCRIPT_PATH/weapons.json"
 SUMMONS_FILE="$SCRIPT_PATH/summons.json"
 
@@ -16,13 +16,6 @@ map({
   ._modificationDate | strptime("%Y-%m-%d %H:%M:%S") | mktime
 }) |
 add'
-
-debug() {
-  FILE_PATH="$1"
-  echo '```json' >> "$GITHUB_STEP_SUMMARY"
-  cat "$FILE_PATH" >> "$GITHUB_STEP_SUMMARY"
-  echo '```' >> "$GITHUB_STEP_SUMMARY"
-}
 
 _escape() {
   node -p "encodeURI(process.argv[1])" "$1"
@@ -39,7 +32,6 @@ WEAPONS_URL="https://gbf.wiki/index.php?title=Special:CargoExport"\
 "&format=json"
 WEAPONS_URL="$(_escape "$WEAPONS_URL")"
 curl -A "$USER_AGENT" -fsSL "$WEAPONS_URL&$RANDOM" > "$TEMP_FILE"
-debug "$TEMP_FILE"
 jq "$JQ_QUERY" "$TEMP_FILE" > "$WEAPONS_FILE"
 echo "OK $(cat "$WEAPONS_FILE" | wc -l)"
 
@@ -55,6 +47,5 @@ WEAPONS_URL="https://gbf.wiki/index.php?title=Special:CargoExport"\
 "&format=json"
 SUMMONS_URL="$(_escape "$WEAPONS_URL")"
 curl -A "$USER_AGENT" -fsSL "$SUMMONS_URL&$RANDOM" > "$TEMP_FILE"
-debug "$TEMP_FILE"
 jq "$JQ_QUERY" "$TEMP_FILE" > "$SUMMONS_FILE"
 echo "OK $(cat "$SUMMONS_FILE" | wc -l)"
