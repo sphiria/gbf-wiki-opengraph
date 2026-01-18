@@ -4,7 +4,7 @@ set -Eueo pipefail
 USER_AGENT="curl github.com/FabulousCupcake/gbf-wiki-opengraph"
 
 SCRIPT_PATH=$(dirname $(realpath -s $0))
-TEMP_FILE="$(/tmp/data.json)"
+TEMP_FILE="/tmp/data.json"
 WEAPONS_FILE="$SCRIPT_PATH/weapons.json"
 SUMMONS_FILE="$SCRIPT_PATH/summons.json"
 
